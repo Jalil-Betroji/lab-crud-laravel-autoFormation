@@ -168,3 +168,15 @@ Finally, this line returns the `$post` object, which now represents the saved po
 ``` php
     return \App\Models\Post::all();
 ``` 
+- **::all()** : is an Eloquent method that fetches all records from the corresponding database table (`posts` in our case) and returns them as a collection of `post` model instances.
+
+> more over we can specify which data we want to get from database table inside the all method for example:
+``` php
+   return \App\Models\Post::all('id','title');
+``` 
+- **::all(`'id'` , `'title'`)** : in this situation we call for all data defined inside `id` and `title` table columns
+> sometimes we need to debug on our code to see our upcoming data , in this situation we can use **dd()** method:
+```php
+dd($post[0]->title);
+```
+- **dd($post[0]->title) :** in this line we print the title of index 0 from comming table data 

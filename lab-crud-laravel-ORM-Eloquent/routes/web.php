@@ -19,13 +19,17 @@ Route::get('/' , function(){
 Route::prefix('blog')->group(function(){
         Route::get('' , function(Request $request){
 
-            $post = new \App\Models\Post;       
-            $post->title = 'my first article';  
-            $post->slug = 'my-first-article';   
-            $post->content = "My Content";      
-            $post->save();                      
-            return $post;                       
-            
+            // $post = new \App\Models\Post;       
+            // $post->title = 'my first article';  
+            // $post->slug = 'my-first-article';   
+            // $post->content = "My Content";      
+            // $post->save();                      
+            // return $post;                       
+            // return \App\Models\Post::all();
+            // return \App\Models\Post::all('id','title');
+             $post = \App\Models\Post::all('id','title');
+            //  dd($post);
+            //  dd($post[0]->title);
              return $post;
             return[
                 "link" => \route('blog.show' ,["slug" => "article" , "id" => 13])
