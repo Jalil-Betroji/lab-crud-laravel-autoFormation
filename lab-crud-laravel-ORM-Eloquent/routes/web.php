@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+// use App\Models\Post;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +13,28 @@ use Illuminate\Http\Request;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
+Route::get('/' , function(){
     return view('welcome');
+});
+Route::prefix('blog')->group(function(){
+        Route::get('' , function(Request $request){
+
+            $post = new \App\Models\Post;       
+            $post->title = 'my first article';  
+            $post->slug = 'my-first-article';   
+            $post->content = "My Content";      
+            $post->save();                      
+            return $post;                       
+            
+             return $post;
+            return[
+                "link" => \route('blog.show' ,["slug" => "article" , "id" => 13])
+            ];
+        })->name("index");
+        Route::get('/{slug}/{id}' , function(string $slug , string $id , Request $request){
+            return[
+                "slug" => $slug,
+                "id" => $id
+            ];
+        })->name('blog.show');
 });

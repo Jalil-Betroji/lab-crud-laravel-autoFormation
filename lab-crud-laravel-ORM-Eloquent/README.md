@@ -6,18 +6,20 @@ As you'll soon discover, once you grasp the underlying principle, using it is re
 
 ## Migration
 
-In our case, we want to be able to interact with our database to create an article system. We'll have to start by creating the table and the different fields needed and we won't necessarily need to use SQL. The Laravel migration system can be used.<br> 
-### ***To do this, we're going to go to the terminal and we're going to type the command:***
-```
+In our case, we want to be able to interact with our database to create an article system. We'll have to start by creating the table and the different fields needed and we won't necessarily need to use SQL. The Laravel migration system can be used.<br>
+**_To do this, we're going to go to the terminal and we're going to type the command:_**
+
+```bash
 php artisan make:migration CreatePostTable
 ```
-- ***You can change `CreatePostTable` with the name of your table***
 
-This will create a migration file in the folder. database/migration which will make it possible to add information to our database.<br> 
-The migration file will contain two methods, one method up which explains how to generate the tables<br> 
+-   **_You can change `CreatePostTable` with the name of your table_**
+
+This will create a migration file in the folder. database/migration which will make it possible to add information to our database.<br>
+The migration file will contain two methods, one method up which explains how to generate the tables<br>
 And the fields and a method down which will make it possible to go back.<br>
 
-``` , php
+```php
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -44,14 +46,125 @@ return new class extends Migration
 };
 ```
 
-This migration system makes it possible to interact with the creation of the tables with a PHP API rather than having to write SQL.<br> 
+This migration system makes it possible to interact with the creation of the tables with a PHP API rather than having to write SQL.<br>
 This adapts regardless of the database management system you use.<br>
 
 Once we're satisfied, we're going to be able to start our migration.<br>
 To do this, again, it will be necessary to go to the terminal and the command will be typed.<br>
-```,php
+
+```bash
 php artisan migrate
 ```
 
-If we then look at the content of this database, we'll see that there are our different tables, and we have the table. post swhich will contain the fields which have been requested.
-<p>So that's it to create tables but that's not enough for us, we would like to be able to retrieve or save information .</p>
+### Models
+
+1. why we need models
+If we then look at the content of this database, we'll see that there are our different tables, and we have the table. posts which will contain the fields which have been requested.
+   <p>So that's it to create tables but that's not enough for us, we would like to be able to retrieve or save information .</p>
+   <p>To do that we have an other component intervenes which are models and we can add it using next command :</p>
+
+```bash
+php artisan make:model Post
+```
+
+-   **_You can change `Post` with the name of your Model_** <br>
+    > note that we can ask laravel to create model and the migration at the same time by adding a dash m :
+
+```bash
+php artisan make:model Post -m
+```
+
+**_this will create a model file for us located in_** **app\Models\Post.php** <br> 2. Model usage :
+
+<p>Here the first model view after running the command </p>
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Post extends Model
+{
+    use HasFactory;
+}
+```
+
+-   **namespace App\Models;:** This line defines the namespace of the class. In this case, the class Post belongs to the App\Models namespace. Namespaces are used to avoid naming conflicts between different parts of your application.
+
+-   **use Illuminate\Database\Eloquent\Factories\HasFactory;:** This line imports the HasFactory trait from the Illuminate\Database\Eloquent\Factories namespace. Traits are a way to share methods among classes. In this case, the HasFactory trait provides methods to create model factories in Laravel.
+
+-   **use Illuminate\Database\Eloquent\Model;:** This line imports the Model class from the Illuminate\Database\Eloquent namespace. The Model class is a fundamental class for Eloquent models in Laravel. It provides methods and features for interacting with the database.
+
+-   **class Post extends Model:** This line defines the Post class, which extends the Model class. In object-oriented programming, "extends" is used to indicate that a class is inheriting properties and methods from another class. Here, Post inherits functionality from the Laravel Model class.
+
+-   **use HasFactory;:** This line uses the HasFactory trait in the Post class. By including this line, the Post model can use methods provided by the HasFactory trait. Traits in PHP are similar to classes, but they group functionality in a fine-grained and consistent way.
+    > **_now let play with our Model using Routes :_**
+-   we are going to make a small concrete example we are going to go in `web.php` and we will go to the root route of the blog
+    > Now we have the possibility of creating a new article by :
+
+```php
+
+Route::prefix('blog')->group(function(){
+        Route::get('' , function(Request $request){
+
+            $post = new \App\Models\Post;
+            $post->title = 'my first article';
+            $post->slug = 'my-first-article';
+            $post->content = "My Content";
+            $post->save();
+            return $post;
+
+            return[
+                "link" => \route('blog.show' ,["slug" => "article" , "id" => 13])
+            ];
+        })->name("index");
+        Route::get('/{slug}/{id}' , function(string $slug , string $id , Request $request){
+            return[
+                "slug" => $slug,
+                "id" => $id
+            ];
+        })->name('blog.show');
+});
+
+```
+
+```php
+$post = new \App\Models\Post;
+```
+
+> This line creates a new instance of the Post model. The `new` keyword is used to instantiate a new object of a class.<br> `\App\Models\Post `specifies the fully qualified namespace of the `Post` model, indicating its location in the `App\Models` namespace.<br>
+
+``` php
+$post->title = 'my first article';
+``` 
+This line sets the title attribute of the `$post` object to the string 'my first article'.
+
+``` php
+$post->slug = 'my-first-article';
+``` 
+This line sets the slug attribute of the `$post` object to the string 'my-first-article'.
+
+``` php
+$post->content = "My Content";
+``` 
+
+This line sets the content attribute of the `$post` object to the string "My Content".
+
+``` php
+$post->save();
+``` 
+
+This line saves the $post object to the database. The `save()` method is provided by Eloquent, Laravel's ORM, and it inserts a new record into the corresponding database table.
+
+``` php
+return $post;
+``` 
+
+Finally, this line returns the `$post` object, which now represents the saved post in the database, including its unique identifier (id) generated by the database.
+> in addition to show all data from our database tables we have a perfect method to fetch all data , and this method is `all()`:
+``` php
+    return \App\Models\Post::all();
+``` 
