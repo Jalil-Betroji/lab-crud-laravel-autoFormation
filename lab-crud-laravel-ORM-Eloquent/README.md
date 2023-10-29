@@ -190,7 +190,9 @@ return $post;
 ```
 - `dd($post);` : 
  - we use it to debug on our code and see the data result as collection here is an example if `find(1)` find the data :
- ![dd debug if we find result](C:\xampp\htdocs\_Solicoders\lab-crud-laravel-autoFormation\lab-crud-laravel-ORM-Eloquent\ddtrue.PNG)
+  - dd debug if we find result:
+  <img src='ddtrue.PNG'>
+
  - an example if we don't find a result :
  ![dd debug if we don't find a result](C:\xampp\htdocs\_Solicoders\lab-crud-laravel-autoFormation\lab-crud-laravel-ORM-Eloquent\ddFalse.PNG)
 **=>** *we also have a method called `findOrFail()` and it make same role of `find()` but the different is on how result showed :*
