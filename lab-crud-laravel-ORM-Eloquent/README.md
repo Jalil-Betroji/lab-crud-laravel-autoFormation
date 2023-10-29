@@ -191,11 +191,11 @@ return $post;
 - `dd($post);` : 
  - we use it to debug on our code and see the data result as collection here is an example if `find(1)` find the data :
   - dd debug if we find result:
-  <img src='ddtrue.PNG'>
+  <img src='ddtrue.PNG' style ="width:70%;">
 
  - an example if we don't find a result :
   - dd debug if we don't find a result :
-    <img src='ddFalse.PNG'>
+    <img src='ddFalse.PNG' style ="width:70%;">
 **=>** *we also have a method called `findOrFail()` and it make same role of `find()` but the different is on how result showed :*
 ```php
 $post = \App\Models\Post::findOrFail(1);
@@ -205,10 +205,10 @@ return $post;
 - `dd($post);` : 
  - we use it to debug on our code and see the data result as collection here is an example if `find(1)` find the data :
   - dd debug if we find result:
-  <img src='ddtrue.PNG'>
+  <img src='ddtrue.PNG' style ="width:70%;">
  - an example if we don't find a result :
    -dd debug if we don't find a result:
-   <img src='ddFalseFOF.PNG'>
+   <img src='ddFalseFOF.PNG' style ="width:70%;">
 **=>** ***we can use it if we not want to execute rest of the code if it has not found the records.
 **==>** *Another interesting point is that we have the option to implement pagination for the listing.<br> We can achieve this by using the `paginate()` method and setting a limit to display 'n' number of records per page ,Here is an example:*
 ```php
@@ -218,7 +218,7 @@ $post = \App\Models\Post::paginate(2);
 - `dd($post);` : 
  - we use it to debug on our code and see the data result as collection here is an example if `paginate(2)` find the data :
   - dd debug result:
-   <img src='ddPag.PNG'>
+   <img src='ddPag.PNG' style ="width:70%;">
 
 > **Note : to make pagination methdod work you need to go to app folder tan to providers than to AppServiceProvider.php and add the following code**
 ```php
@@ -227,4 +227,4 @@ paginator::useBootstrap();
 ```
 - here is an example :
  - AppServiceProvider.php example : 
- <img src='pagService.PNG'>
+ <img src='pagService.PNG' style ="width:70%;">
