@@ -180,3 +180,28 @@ Finally, this line returns the `$post` object, which now represents the saved po
 dd($post[0]->title);
 ```
 - **dd($post[0]->title) :** in this line we print the title of index 0 from comming table data 
+
+> in addition to `all()` method we also have other methods which are interestingg . we have a method which allow us to retrieve a particular article <br> And this method is called `find()` we do find and we give it the ID of the article taht we want to retrieve
+
+```php
+$post = \App\Models\Post::find(1);
+dd($post);
+return $post;
+```
+- `dd($post);` : 
+ - we use it to debug on our code and see the data result as collection here is an example if `find(1)` find the data :
+ ![dd debug if we find result](C:\xampp\htdocs\_Solicoders\lab-crud-laravel-autoFormation\lab-crud-laravel-ORM-Eloquent\ddtrue.PNG)
+ - an example if we don't find a result :
+ ![dd debug if we don't find a result](C:\xampp\htdocs\_Solicoders\lab-crud-laravel-autoFormation\lab-crud-laravel-ORM-Eloquent\ddFalse.PNG)
+**=>** *we also have a method called `findOrFail()` and it make same role of `find()` but the different is on how result showed :*
+```php
+$post = \App\Models\Post::findOrFail(1);
+dd($post);
+return $post;
+```
+- `dd($post);` : 
+ - we use it to debug on our code and see the data result as collection here is an example if `find(1)` find the data :
+ ![dd debug if we find result](C:\xampp\htdocs\_Solicoders\lab-crud-laravel-autoFormation\lab-crud-laravel-ORM-Eloquent\ddtrue.PNG)
+ - an example if we don't find a result :
+ ![dd debug if we don't find a result](C:\xampp\htdocs\_Solicoders\lab-crud-laravel-autoFormation\lab-crud-laravel-ORM-Eloquent\ddFalseFOF.PNG)
+**=>** ***we can use it if we not want to execute rest of the code if it has not found the records.

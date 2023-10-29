@@ -27,10 +27,14 @@ Route::prefix('blog')->group(function(){
             // return $post;                       
             // return \App\Models\Post::all();
             // return \App\Models\Post::all('id','title');
-             $post = \App\Models\Post::all('id','title');
+            //  $post = \App\Models\Post::all('id','title');
             //  dd($post);
             //  dd($post[0]->title);
+            $post = \App\Models\Post::find(1);
+            // $post = \App\Models\Post::findOrFail(41);
+            dd($post);
              return $post;
+
             return[
                 "link" => \route('blog.show' ,["slug" => "article" , "id" => 13])
             ];
