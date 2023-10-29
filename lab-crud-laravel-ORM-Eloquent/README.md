@@ -219,6 +219,8 @@ $post = \App\Models\Post::paginate(2);
  - we use it to debug on our code and see the data result as collection here is an example if `paginate(2)` find the data :
   - dd debug result:
    <img src='ddPag.PNG' style ="width:70%;">
+  - pagination result as an JSON file :
+  <img src='pagJSON.PNG'>
 
 > **Note : to make pagination methdod work you need to go to app folder tan to providers than to AppServiceProvider.php and add the following code**
 ```php

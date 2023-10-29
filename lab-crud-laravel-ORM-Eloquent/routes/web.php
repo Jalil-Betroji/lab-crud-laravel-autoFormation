@@ -33,7 +33,7 @@ Route::prefix('blog')->group(function(){
             // $post = \App\Models\Post::find(1);
             // $post = \App\Models\Post::findOrFail(41);
             $post = \App\Models\Post::paginate(2);
-            dd($post);
+            // dd($post);
              return $post;
 
             return[
