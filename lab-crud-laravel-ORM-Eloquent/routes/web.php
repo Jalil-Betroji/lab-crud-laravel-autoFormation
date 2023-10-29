@@ -30,8 +30,9 @@ Route::prefix('blog')->group(function(){
             //  $post = \App\Models\Post::all('id','title');
             //  dd($post);
             //  dd($post[0]->title);
-            $post = \App\Models\Post::find(1);
+            // $post = \App\Models\Post::find(1);
             // $post = \App\Models\Post::findOrFail(41);
+            $post = \App\Models\Post::paginate(2);
             dd($post);
              return $post;
 

@@ -205,3 +205,19 @@ return $post;
  - an example if we don't find a result :
  ![dd debug if we don't find a result](C:\xampp\htdocs\_Solicoders\lab-crud-laravel-autoFormation\lab-crud-laravel-ORM-Eloquent\ddFalseFOF.PNG)
 **=>** ***we can use it if we not want to execute rest of the code if it has not found the records.
+**==>** *Another interesting point is that we have the option to implement pagination for the listing.<br> We can achieve this by using the `paginate()` method and setting a limit to display 'n' number of records per page ,Here is an example:*
+```php
+$post = \App\Models\Post::paginate(2);
+```
+> than if we check the result we will get data us **LengthAwarePaginator** and this is somthing that could be used both in the views but also in the API part to generate paginations .
+- `dd($post);` : 
+ - we use it to debug on our code and see the data result as collection here is an example if `paginate(2)` find the data :
+ ![dd debug result](C:\xampp\htdocs\_Solicoders\lab-crud-laravel-autoFormation\lab-crud-laravel-ORM-Eloquent\ddPag.PNG)
+
+> **Note : to make pagination methdod work you need to go to app folder tan to providers than to AppServiceProvider.php and add the following code**
+```php
+use Illuminate\Pagination\Paginator;
+paginator::useBootstrap();
+```
+- here is an example :
+![AppServiceProvider.php example](C:\xampp\htdocs\_Solicoders\lab-crud-laravel-autoFormation\lab-crud-laravel-ORM-Eloquent\pagService.PNG)
