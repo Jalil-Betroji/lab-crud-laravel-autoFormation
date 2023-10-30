@@ -255,3 +255,13 @@ return $post;
 - `get()`: ***we use it to get the all element of data we got from `where()` method***
 - `dd($post)` : ***result***
 <img src='ddGetResult.PNG'>
+
+> **Also we have a queryBuilder method called `limit()` and we can use it to get a limit number of data :**
+```php
+$post = \App\Models\Post::where('id' , '>' , 0)->limit(1);
+dd($post);
+return $post;
+```
+- `limit()`: ***we use it to get limited number of data we got from `where()` method***
+- `dd($post)` : ***result***
+<img src='ddGetResult.PNG'>
