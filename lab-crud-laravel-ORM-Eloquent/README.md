@@ -265,4 +265,5 @@ return $post;
 - `limit()`: ***we use it to get limited number of data `where()` method***
 - `get()`: ***we use it to get the all element of data we got from `where()->limit(1)` method***
 - `dd($post)` : ***result***
-<img src='ddGetResult.PNG'>
+<img src='ddLimitR.PNG'>
+
