@@ -34,7 +34,8 @@ Route::prefix('blog')->group(function(){
             // $post = \App\Models\Post::findOrFail(41);
             // $post = \App\Models\Post::paginate(2);
             // $post = \App\Models\Post::where("id" ,'>' , 0)->first();
-            $post = \App\Models\Post::where("id" ,'>' , 0)->get();
+            // $post = \App\Models\Post::where("id" ,'>' , 0)->get();
+            $post = \App\Models\Post::where("id" ,'>' , 0)->limit(1)->get();
             dd($post);
              return $post;
 
