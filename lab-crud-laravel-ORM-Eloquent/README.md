@@ -230,3 +230,28 @@ paginator::useBootstrap();
 - here is an example :
  - AppServiceProvider.php example : 
  <img src='pagService.PNG' style ="width:70%;">
+
+**Also we can define specific data that we can get inside the pagination using this code :**
+```php
+$post = \App\Models\Post::paginate(1 , ["id","title"])
+```
+> **Note that we have the possibility of using the querybuilder which will allow us to design queries , so we can design specific queries starting in particular from the model , for example we want to put conditions on join or this type of thing we will have methods which have an I which is greater than 0 , so i can do that by running the code bellow :**
+```php
+$post = \App\Models\Post::where('id' , '>' , 0)->first();
+dd($post);
+return $post;
+```
+- `where()`: ***we use it to get data where id greater than 0 ***
+- `first()`: ***we use it to get the first element of data we got from `where()` method***
+- `dd($post)` : ***result***
+<img src='ddFirstResult.PNG'>
+
+> **Also we can use same method of `where()` and `get()` method to get all element :**
+```php
+$post = \App\Models\Post::where('id' , '>' , 0)->get();
+dd($post);
+return $post;
+```
+- `get()`: ***we use it to get the all element of data we got from `where()` method***
+- `dd($post)` : ***result***
+<img src='ddGetResult.PNG'>
