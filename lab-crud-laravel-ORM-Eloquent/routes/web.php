@@ -42,8 +42,12 @@ Route::prefix('blog')->group(function(){
             //     'content' => 'new content'
             // ]);
             // dd($post);
-            $post = \App\Models\Post::find(1);
-            $post->delete();
+            // $post = \App\Models\Post::find(1);
+            // $post->delete();
+            $post = \App\Models\Post::where('id', '>',1)->update([
+                'title' => 'updated article test',
+                'content' => 'updated content'
+            ]);
              return $post;
 
             return[

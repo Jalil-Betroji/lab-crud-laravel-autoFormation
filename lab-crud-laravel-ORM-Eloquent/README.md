@@ -310,3 +310,16 @@ $post->delete();
 - In this example, a record with the ID of 1 is retrieved from the `Post` model, and then it is deleted from the database.
  - The `$post` variable holds the retrieved post from the Post model using its `find()` method with the ID of 1.
  - The `delete()` method is then called on the `$post` instance, deleting the record from the database.
+
+#### Updating Records in the Database
+
+```php
+$post = \App\Models\Post::where('id', '>',1)->update([
+'title' => 'updated article test',
+'content' => 'updated content'
+]);
+return $post;
+```
+
+- The `where()` method is used to specify the condition for updating records. In this case, it updates records where the id is greater than 1.
+- The `update()` method updates the specified columns (title and content) with the provided values ('updated article test' and 'updated content' respectively).
