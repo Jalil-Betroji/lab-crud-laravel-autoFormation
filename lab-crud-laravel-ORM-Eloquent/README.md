@@ -7,6 +7,8 @@ As you'll soon discover, once you grasp the underlying principle, using it is re
 ## Migration
 
 In our case, we want to be able to interact with our database to create an article system. We'll have to start by creating the table and the different fields needed and we won't necessarily need to use SQL. The Laravel migration system can be used.<br>
+## Creating Database Tables
+
 **_To do this, we're going to go to the terminal and we're going to type the command:_**
 
 ```bash
@@ -18,7 +20,7 @@ php artisan make:migration CreatePostTable
 This will create a migration file in the folder. database/migration which will make it possible to add information to our database.<br>
 The migration file will contain two methods, one method up which explains how to generate the tables<br>
 And the fields and a method down which will make it possible to go back.<br>
-
+1. **Migration File Example**
 ```php
 <?php
 
@@ -49,6 +51,8 @@ return new class extends Migration
 This migration system makes it possible to interact with the creation of the tables with a PHP API rather than having to write SQL.<br>
 This adapts regardless of the database management system you use.<br>
 
+2. **Running Migrations**
+
 Once we're satisfied, we're going to be able to start our migration.<br>
 To do this, again, it will be necessary to go to the terminal and the command will be typed.<br>
 
@@ -56,9 +60,9 @@ To do this, again, it will be necessary to go to the terminal and the command wi
 php artisan migrate
 ```
 
-### Models
+## Models
 
-1. why we need models
+1. ***why we need models***
 If we then look at the content of this database, we'll see that there are our different tables, and we have the table. posts which will contain the fields which have been requested.
    <p>So that's it to create tables but that's not enough for us, we would like to be able to retrieve or save information .</p>
    <p>To do that we have an other component intervenes which are models and we can add it using next command :</p>
@@ -67,14 +71,15 @@ If we then look at the content of this database, we'll see that there are our di
 php artisan make:model Post
 ```
 
--   **_You can change `Post` with the name of your Model_** <br>
+2. **_You can change `Post` with the name of your Model_ :** <br>
     > note that we can ask laravel to create model and the migration at the same time by adding a dash m :
 
 ```bash
 php artisan make:model Post -m
 ```
 
-**_this will create a model file for us located in_** **app\Models\Post.php** <br> 2. Model usage :
+**_this will create a model file for us located in_** **app\Models\Post.php** <br> 
+3. ***Model usage :***
 
 <p>Here the first model view after running the command </p>
 
@@ -92,21 +97,21 @@ class Post extends Model
 }
 ```
 
--   **namespace App\Models;:** This line defines the namespace of the class. In this case, the class Post belongs to the App\Models namespace. Namespaces are used to avoid naming conflicts between different parts of your application.
+- **namespace App\Models;:** This line defines the namespace of the class. In this case, the class Post belongs to the App\Models namespace. Namespaces are used to avoid naming conflicts between different parts of your application.
 
--   **use Illuminate\Database\Eloquent\Factories\HasFactory;:** This line imports the HasFactory trait from the Illuminate\Database\Eloquent\Factories namespace. Traits are a way to share methods among classes. In this case, the HasFactory trait provides methods to create model factories in Laravel.
+- **use Illuminate\Database\Eloquent\Factories\HasFactory;:** This line imports the HasFactory trait from the Illuminate\Database\Eloquent\Factories namespace. Traits are a way to share methods among classes. In this case, the HasFactory trait provides methods to create model factories in Laravel.
 
--   **use Illuminate\Database\Eloquent\Model;:** This line imports the Model class from the Illuminate\Database\Eloquent namespace. The Model class is a fundamental class for Eloquent models in Laravel. It provides methods and features for interacting with the database.
+- **use Illuminate\Database\Eloquent\Model;:** This line imports the Model class from the Illuminate\Database\Eloquent namespace. The Model class is a fundamental class for Eloquent models in Laravel. It provides methods and features for interacting with the database.
 
--   **class Post extends Model:** This line defines the Post class, which extends the Model class. In object-oriented programming, "extends" is used to indicate that a class is inheriting properties and methods from another class. Here, Post inherits functionality from the Laravel Model class.
+- **class Post extends Model:** This line defines the Post class, which extends the Model class. In object-oriented programming, "extends" is used to indicate that a class is inheriting properties and methods from another class. Here, Post inherits functionality from the Laravel Model class.
 
--   **use HasFactory;:** This line uses the HasFactory trait in the Post class. By including this line, the Post model can use methods provided by the HasFactory trait. Traits in PHP are similar to classes, but they group functionality in a fine-grained and consistent way.
-    > **_now let play with our Model using Routes :_**
--   we are going to make a small concrete example we are going to go in `web.php` and we will go to the root route of the blog
+- **use HasFactory;:** This line uses the HasFactory trait in the Post class. By including this line, the Post model can use methods provided by the HasFactory trait. Traits in PHP are similar to classes, but they group functionality in a fine-grained and consistent way.
+
+## Creating a New Record:
+we are going to make a small concrete example we are going to go in `web.php` and we will go to the root route of the blog
     > Now we have the possibility of creating a new article by :
 
 ```php
-
 Route::prefix('blog')->group(function(){
         Route::get('' , function(Request $request){
 
@@ -130,6 +135,7 @@ Route::prefix('blog')->group(function(){
 });
 
 ```
+- ***code explanation :***
 
 ```php
 $post = new \App\Models\Post;
@@ -164,7 +170,8 @@ return $post;
 ``` 
 
 Finally, this line returns the `$post` object, which now represents the saved post in the database, including its unique identifier (id) generated by the database.
-> in addition to show all data from our database tables we have a perfect method to fetch all data , and this method is `all()`:
+## Retrieving Records:
+ in addition to show all data from our database tables we have a perfect method to fetch all data , and this method is `all()`:
 ``` php
     return \App\Models\Post::all();
 ``` 
@@ -210,6 +217,8 @@ return $post;
    -dd debug if we don't find a result:
    <img src='ddFalseFOF.PNG' style ="width:70%;">
 **=>** ***we can use it if we not want to execute rest of the code if it has not found the records.
+## Paginate Records:
+
 **==>** *Another interesting point is that we have the option to implement pagination for the listing.<br> We can achieve this by using the `paginate()` method and setting a limit to display 'n' number of records per page ,Here is an example:*
 ```php
 $post = \App\Models\Post::paginate(2);
@@ -256,7 +265,9 @@ return $post;
 - `dd($post)` : ***result***
 <img src='ddGetResult.PNG'>
 
-> **Also we have a queryBuilder method called `limit()` and we can use it to get a limit number of data :**
+## QueryBuilders :
+
+1. **Also we have a queryBuilder method called `limit()` and we can use it to get a limit number of data :**
 ```php
 $post = \App\Models\Post::where('id' , '>' , 0)->limit(1)->get();
 dd($post);
@@ -267,7 +278,7 @@ return $post;
 - `dd($post)` : ***result***
 <img src='ddLimitR.PNG'>
 
-### we another method called `create()` that we can use to insert new data into our database:
+2. we another method called `create()` that we can use to insert new data into our database:
 ```php
 $post = \App\Models\Post::create([
     'title' => 'new article test',
@@ -301,7 +312,7 @@ class Post extends Model
 ```
 - We utilized the `$fillable` property, which allows us to specify attributes that are authorized for mass assignment. Alternatively, the `$guarded` property can be used, allowing everything to be mass-assignable, and specific attributes can be protected by creating a banlist.
 
-#### Deleting a Record from the Database
+## Deleting a Record from the Database
 
 ```php
 $post = \App\Models\Post::find(1);
@@ -311,7 +322,7 @@ $post->delete();
  - The `$post` variable holds the retrieved post from the Post model using its `find()` method with the ID of 1.
  - The `delete()` method is then called on the `$post` instance, deleting the record from the database.
 
-#### Updating Records in the Database
+## Updating Records in the Database
 
 ```php
 $post = \App\Models\Post::where('id', '>',1)->update([
@@ -324,7 +335,7 @@ return $post;
 - The `where()` method is used to specify the condition for updating records. In this case, it updates records where the id is greater than 1.
 - The `update()` method updates the specified columns (title and content) with the provided values ('updated article test' and 'updated content' respectively).
 
-#### 
+## Displaying Specific Post Based on URL Parameters :
 
 ```php
 Route::prefix('blog')->group(function(){
@@ -343,4 +354,4 @@ Route::prefix('blog')->group(function(){
 ```
 - In this code, we use the prefix() method to group routes under the 'blog' URL segment.
 - The first route (/blog) retrieves paginated blog posts from the database.
-- The second route (/blog/{slug}/{id}) retrieves a specific blog post based on its ID. It checks if the provided slug matches the post's actual slug. If not, it redirects the user to the correct URL.
+- The second route (/blog/{slug}/{id}) retrieves a specific blog post based on its ID. It checks if the provided slug matches the post's actual slug. If not, it redirects the user to the correct URL. and we do it using `to_route()` function 
