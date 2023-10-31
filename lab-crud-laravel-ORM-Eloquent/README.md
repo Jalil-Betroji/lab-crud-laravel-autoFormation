@@ -323,3 +323,24 @@ return $post;
 
 - The `where()` method is used to specify the condition for updating records. In this case, it updates records where the id is greater than 1.
 - The `update()` method updates the specified columns (title and content) with the provided values ('updated article test' and 'updated content' respectively).
+
+#### 
+
+```php
+Route::prefix('blog')->group(function(){
+        Route::get('' , function(Request $request){
+            $post = \App\Models\Post::paginate(2);
+            return $post;
+        })->name("index");
+        Route::get('/{slug}/{id}' , function(string $slug , string $id , Request $request){
+           $post = \App\Models\Post::findOrFail($id);
+           if($post->slug !== $slug){
+            return to_route('blog.show' , ['slug' => $post->slug ,'id' => $post->id]);
+           }
+           return $post;
+        })->name('blog.show');
+});
+```
+- In this code, we use the prefix() method to group routes under the 'blog' URL segment.
+- The first route (/blog) retrieves paginated blog posts from the database.
+- The second route (/blog/{slug}/{id}) retrieves a specific blog post based on its ID. It checks if the provided slug matches the post's actual slug. If not, it redirects the user to the correct URL.
