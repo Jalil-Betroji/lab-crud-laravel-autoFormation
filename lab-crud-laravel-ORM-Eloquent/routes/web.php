@@ -36,14 +36,14 @@ Route::prefix('blog')->group(function(){
             // $post = \App\Models\Post::where("id" ,'>' , 0)->first();
             // $post = \App\Models\Post::where("id" ,'>' , 0)->get();
             // $post = \App\Models\Post::where("id" ,'>' , 0)->limit(1)->get();
-            $post = \App\Models\Post::create([
-                'title' => 'new article test',
-                'slug' => 'new-article-test',
-                'content' => 'new content'
-            ]);
+            // $post = \App\Models\Post::create([
+            //     'title' => 'new article test',
+            //     'slug' => 'new-article-test',
+            //     'content' => 'new content'
+            // ]);
             // dd($post);
-            // $post = \App\Models\Post::find(1);
-            // $post->delete();
+            $post = \App\Models\Post::find(1);
+            $post->delete();
              return $post;
 
             return[

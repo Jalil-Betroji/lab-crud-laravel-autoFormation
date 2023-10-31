@@ -300,3 +300,13 @@ class Post extends Model
 }
 ```
 - We utilized the `$fillable` property, which allows us to specify attributes that are authorized for mass assignment. Alternatively, the `$guarded` property can be used, allowing everything to be mass-assignable, and specific attributes can be protected by creating a banlist.
+
+#### Deleting a Record from the Database
+
+```php
+$post = \App\Models\Post::find(1);
+$post->delete();
+```
+- In this example, a record with the ID of 1 is retrieved from the `Post` model, and then it is deleted from the database.
+ - The `$post` variable holds the retrieved post from the Post model using its `find()` method with the ID of 1.
+ - The `delete()` method is then called on the `$post` instance, deleting the record from the database.
