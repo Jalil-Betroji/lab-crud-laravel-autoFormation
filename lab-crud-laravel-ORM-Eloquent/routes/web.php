@@ -1,5 +1,6 @@
 <?php
 
+// use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 // use App\Models\Post;
@@ -44,20 +45,20 @@ Route::prefix('blog')->group(function(){
             // dd($post);
             // $post = \App\Models\Post::find(1);
             // $post->delete();
-            $post = \App\Models\Post::where('id', '>',1)->update([
-                'title' => 'updated article test',
-                'content' => 'updated content'
-            ]);
-             return $post;
+            // $post = \App\Models\Post::where('id', '>',1)->update([
+            //     'title' => 'updated article test',
+            //     'content' => 'updated content'
+            // ]);
+            //  return $post;
 
-            return[
-                "link" => \route('blog.show' ,["slug" => "article" , "id" => 13])
-            ];
+            $post = \App\Models\Post::paginate(2);
+            return $post;
         })->name("index");
         Route::get('/{slug}/{id}' , function(string $slug , string $id , Request $request){
-            return[
-                "slug" => $slug,
-                "id" => $id
-            ];
+           $post = \App\Models\Post::findOrFail($id);
+           if($post->slug !== $slug){
+            return to_route('blog.show' , ['slug' => $post->slug ,'id' => $post->id]);
+           }
+           return $post;
         })->name('blog.show');
 });
