@@ -267,3 +267,36 @@ return $post;
 - `dd($post)` : ***result***
 <img src='ddLimitR.PNG'>
 
+### we another method called `create()` that we can use to insert new data into our database:
+```php
+$post = \App\Models\Post::create([
+    'title' => 'new article test',
+    'slug' => 'new-article-test',
+    'content' => 'new content'
+]);
+return $post ;
+```
+- in this code we create new data in each column (title,slug,content) and add it to database using `create()` method
+**=>** ***Note that you need to define the columns you want to insert into in the Post medel , here is an example :***
+<img src='postExampleCode.PNG'>
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Post extends Model
+{
+    use HasFactory;
+    protected $fillable = [
+        'title',
+        'slug',
+        'content'
+    ];
+    protected $guarded = [];
+}
+```
+- We utilized the `$fillable` property, which allows us to specify attributes that are authorized for mass assignment. Alternatively, the `$guarded` property can be used, allowing everything to be mass-assignable, and specific attributes can be protected by creating a banlist.
