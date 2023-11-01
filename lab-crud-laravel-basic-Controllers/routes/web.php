@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\PostController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,4 +15,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+Route::prefix('/blog')->name('blog.')->group(function(){
+    Route::get('/', [PostController::class, 'index'])->name('index');
+    Route::get('/{slug}/{id}', [PostController::class, 'show'])->where([
+        'id'=>'[0-9]+',
+        'slug' => '[a-z0-9\-]+'
+    ])->name('show');
+
 });
