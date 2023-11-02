@@ -1,75 +1,63 @@
-# About this Chapter
+# About this tutorial
 
-In this new chapter where we're going to discover together the principle of controllers in Laravel. These are simply classes that aim to group together the functions that will contain the logic of our application.
+In this chapter we're going to discover the part seen in the MVC structure. Laravel has a template engine that will allow us to generate HTML views more simply.
+> we may ask ourselves why we would not simply use php , the problem is that with views written in php it is not very practical to use a template system or to include sections and all that we have to complicate our lives a little bit and that's why blade will be useful 
 
-## Controller Creation :
-
-At Laravel level, I can create a controller using the command.
-
-```bash
-php artisan make:controller Post
+- The blade views will be created in files with the extension `.blade.php` and the variables can be displayed using braces.
+```php
+{{ $username }}
 ```
+## Example :
 
--   **_You can change `Post` with the name of your Controller_**
--   This command will create a new file in the folder. Http/controllers with indoor a class that extends from the class Controller of our application. It's within this class that we're going to define our methods.
+- Suppose we want to display a list of our articles:
+> ***By default, we might tend to create a new page in the view resources folder. For instance, we would create a new file in a `blog` folder to encompass everything related to the blog and name it `index.blade.php`.***
+
+`blade.php`: The `Blade` point is crucial; it allows us to specify that we are going to use the Laravel template engine.
+
+- `index.blade.php` example :
 
 ```php
-<?php
-namespace App\Http\Controllers;
-use App\Models\Post;
-class PostController extends Controller
-{
-    public function index(){
-        return \App\Models\Post::paginate(3);
-    }
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My blog</title>
+</head>
+<body>
+    <h1>My Blog</h1>
+    
+</body>
+</html>
 ```
+- *One thing to note is that all this part:
+```php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My blog</title>
+</head>
+<body>
+```
+> *this part is common to all pages. It's somewhat inconvenient to see it systematically repeated. If we create a page to view an article, we would have the same structure.*
 
-## take access to Controller using routes :
-
--   so after creating the controller Then we can use it action (functions) in our routing.
+To avoid the hassle of repeating this structure, we can create a template at the root of the view folder, naming it `base.blade.php`. This template will include the repeated HTML code and the <div> where we will add our data.
 
 ```php
-Route::get('/', [PostController::class, 'index'])->name('index');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My blog</title>
+</head>
+<body>
+    <div class="container">
+        @yield('content')
+    </div>
+</body>
+</html>
 ```
-
--   this code mean that when we go to url blog we call the Post class in the Post Controller and run the action `index` (function `index`).
-    > **Note that we need to call the PostController Controller in our route direction by writing this code :**
-
-```php
-use App\Http\Controllers\PostController;
-```
-
--   `->name('index')`: This method is used to assign a name to the route. Naming routes is optional but can be helpful, especially in larger applications, to refer to routes by a specific name instead of the URL path. In this case, the route is named 'index'.
-
-## get data from url and pass it to the controller
-
-```php
-  public function show(string $slug , string $id): RedirectResponse | Post{
-        $post = \App\Models\Post::findOrFail($id);
-        if($post->slug !== $slug){
-        return to_route('blog.show' , ['slug' => $post->slug , 'id' => $post->id]);
-        }
-        return $post;
-    }
-```
-- `RedirectResponse`: It represents a redirection response. In Laravel, when you want to redirect users to a different URL, you return a RedirectResponse instance. It indicates that the method can return a redirect response in certain conditions.
-
-- `Post`: It likely represents an instance of the Post model in Laravel, indicating that the method can return a Post object if certain conditions are met.
-- `Using RedirectResponse | Post` as the return type means that the show method can either return a RedirectResponse (if redirection is necessary) or a Post instance (if the conditions for returning the post are met).
-
-1. Parameters:
-
-string $slug, string $id: These parameters are received from the route. $slug represents the unique identifier of the post in the URL, and $id represents the post's database ID.
-2. Post Retrieval:
-
-$post = \App\Models\Post::findOrFail($id);: This line retrieves a post from the database based on the provided $id. If no post is found with the given ID, Laravel's findOrFail() method throws a ModelNotFoundException.
-
-3. Slug Check and Redirection:
-
-if `($post->slug !== $slug) { ... }`: This condition checks if the retrieved post's slug matches the provided $slug parameter. If they don't match, it indicates that the URL is incorrect or outdated.
-`return redirect()->route('blog.show', ['slug' => $post->slug, 'id' => $post->id]);`: If the slugs do not match, the method redirects the user to the correct URL using Laravel's `redirect()` function. It uses the `to_route()` function (which is likely a custom function) to generate the correct route URL based on the correct slug and ID. This ensures that users are redirected to the appropriate page.
-
-4. Return Statement:
-
-`return $post;`: If the slugs match, meaning the URL is correct, the method returns the retrieved post.
+- `@yield('content')`: This will be used to place the data from `index.blade.php`.
