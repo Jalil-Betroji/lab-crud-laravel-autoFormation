@@ -7,7 +7,8 @@ use Illuminate\Http\RedirectResponse;
 class PostController extends Controller
 {
     public function index(){
-        return \App\Models\Post::paginate(3);
+        $post = \App\Models\Post::paginate(3);
+        return view('blog.index');
     }
     public function show(string $slug , string $id): RedirectResponse | Post{
         $post = \App\Models\Post::findOrFail($id);
