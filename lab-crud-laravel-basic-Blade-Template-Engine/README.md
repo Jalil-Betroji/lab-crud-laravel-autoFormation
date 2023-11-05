@@ -223,3 +223,7 @@ In the previous sections, we successfully retrieved paginated data. However, we 
 {{$post->links()}}
 ```
 In this code, we've used `{{$post->links()}}` to display pagination links at the bottom of the page. These links allow users to easily navigate between different pages of articles, providing a seamless browsing experience.
+
+- Here is the result after adding pagination :
+
+<img src="pagination.PNG">
