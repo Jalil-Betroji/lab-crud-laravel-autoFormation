@@ -147,3 +147,59 @@ Blade offers a handy debugging tool called `@dump`. It allows you to inspect var
 - `@dump` displays the variable's content along with information about where it was loaded. It also uses color-coding for better readability, enhancing your debugging experience,Here is an example.
 
 <img src="@dumpR.PNG">
+
+## Loop in laravel :
+
+1. Basics of Passing Variables in Laravel Blade:
+
+In our case, we want to list the articles. When calling a view, we can send variables to be used in the view for generating content. We will send the list of articles as a variable named 'posts' to the view, where 'posts' contains paginated articles.
+
+```php
+<?php
+
+namespace App\Http\Controllers;
+use App\Models\Post;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
+
+class PostController extends Controller
+{
+    public function index():view{
+        return view('blog.index',[
+            'post'=>\App\Models\Post::paginate(2)
+        ]);
+    }
+}
+```
+
+Now, if we go back to our `index.blade.php` and write `@dump($posts)`, We will get our list of articles.
+```php
+@extends('base')
+@section('title' , 'hompage')
+@section('content')
+<h1>My Blog</h1> 
+@dump($post)
+
+@endsection
+```
+- `@dump($post)` result :
+<img src="dumpPoR.PNG">
+
+2. loop on a list and show result :
+
+```php
+@extends('base')
+@section('content')
+<h1>My Blog</h1>
+@foreach($post as $posts)
+<article>
+<h2>{{$posts->title}}</h2>
+<p>
+{{$posts->content}}
+</p>
+</article>>
+@endforeach
+```
+
+- Result :
+<img src="foreachR.PNG">

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class PostController extends Controller
 {
-    public function index(){
-        $post = \App\Models\Post::paginate(3);
-        return view('blog.index');
+    public function index():view{
+        return view('blog.index',[
+            'post'=>\App\Models\Post::paginate(3)
+        ]);
     }
     public function show(string $slug , string $id): RedirectResponse | Post{
         $post = \App\Models\Post::findOrFail($id);
