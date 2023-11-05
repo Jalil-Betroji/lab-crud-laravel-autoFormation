@@ -197,9 +197,29 @@ Now, if we go back to our `index.blade.php` and write `@dump($posts)`, We will g
 <p>
 {{$posts->content}}
 </p>
-</article>>
+</article>
 @endforeach
 ```
 
 - Result :
 <img src="foreachR.PNG">
+
+3. Display Paginated Data with Pagination Links
+
+In the previous sections, we successfully retrieved paginated data. However, we haven't shown how to navigate through these pages. Let's integrate pagination links into our view:
+
+```php
+@extends('base')
+@section('content')
+<h1>My Blog</h1>
+@foreach($post as $posts)
+<article>
+<h2>{{$posts->title}}</h2>
+<p>
+{{$posts->content}}
+</p>
+</article>
+@endforeach
+{{$post->links()}}
+```
+In this code, we've used `{{$post->links()}}` to display pagination links at the bottom of the page. These links allow users to easily navigate between different pages of articles, providing a seamless browsing experience.

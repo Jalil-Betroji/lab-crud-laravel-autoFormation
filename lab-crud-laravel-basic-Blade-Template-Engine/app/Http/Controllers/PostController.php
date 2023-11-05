@@ -9,7 +9,7 @@ class PostController extends Controller
 {
     public function index():view{
         return view('blog.index',[
-            'post'=>\App\Models\Post::paginate(3)
+            'post'=>\App\Models\Post::paginate(2)
         ]);
     }
     public function show(string $slug , string $id): RedirectResponse | Post{
