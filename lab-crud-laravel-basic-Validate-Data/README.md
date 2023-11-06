@@ -50,3 +50,40 @@ The `dd($validator->fails())` statement is used to check if the validation fails
 
 > Here is an example of the result : 
 <img src='validateR.PNG'>
+
+> Now, let's ensure that users cannot insert a value shorter than 3 characters :
+
+2. `min` Rule :
+
+```php
+<?php
+
+namespace App\Http\Controllers;
+use App\Models\Post;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View;
+
+class PostController extends Controller
+{
+    public function index():view{
+    $validator = validator::make([
+        'title'=>''
+    ],[
+        'title' => 'required|min:3'
+    ]);
+    dd($validator->fails());
+        return view('blog.index',[
+            'post'=>\App\Models\Post::paginate(1)
+        ]);
+    }
+}
+```
+
+- Validation Setup:
+
+In the `validator::make` method, the second argument is an array of validation rules. Here, `'title' => 'required|min:3'` specifies that the `'title'` field is required and must have a minimum length of 3 characters `(min:3)`.
+
+- Validation Check:
+
+The `dd($validator->fails())` statement checks if the validation fails. If the input does not meet the defined criteria `(minimum length)`, `fails()` returns `true`, indicating validation failure.
