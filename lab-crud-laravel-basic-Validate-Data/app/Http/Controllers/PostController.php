@@ -10,7 +10,7 @@ class PostController extends Controller
 {
     public function index():view{
     $validator = validator::make([
-        'title'=>'laravel validation data',
+        'title'=>'',
         'content' =>'my laravel autoforamtion content'
     ],[
         'title' => 'required|max:23'

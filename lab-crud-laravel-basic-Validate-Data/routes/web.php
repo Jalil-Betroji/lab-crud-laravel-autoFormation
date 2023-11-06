@@ -14,9 +14,7 @@ use App\Models\Post;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 Route::prefix('/blog')->name('blog.')->group(function(){
     Route::get('/', [PostController::class, 'index'])->name('index');
     Route::get('/{slug}/{id}', [PostController::class, 'show'])->where([

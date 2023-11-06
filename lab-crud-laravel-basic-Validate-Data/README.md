@@ -217,4 +217,6 @@ It's important to note that Laravel's default behavior handles these validation 
 Here is an image of the validator method code in `validator.php`:
 <img src='validationException.PNG'>
 
-- But in our case, since we don't have a previous page, it attempts to redirect us in a loop on the same page. That's why we encounter an error at the browser level.
+- But in our case if we pass incorrect title, since we don't have a previous page, it attempts to redirect us in a loop on the same page. That's why we encounter an error at the browser level.
+
+<img src='validatedRedirect.PNG'>
