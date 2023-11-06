@@ -10,11 +10,11 @@ class PostController extends Controller
 {
     public function index():view{
     $validator = validator::make([
-        'title'=>''
+        'title'=>'laravel validation data'
     ],[
         'title' => 'required|max:8'
     ]);
-    dd($validator->fails());
+    dd($validator->errors());
         return view('blog.index',[
             'post'=>\App\Models\Post::paginate(1)
         ]);
