@@ -227,3 +227,48 @@ In this code, we've used `{{$post->links()}}` to display pagination links at the
 - Here is the result after adding pagination :
 
 <img src="pagination.PNG">
+
+4. Navigate to Another Page for a Specific Article:
+
+Imagine we want to explore more details about a particular article. To enable this, we'll add a **"More Details"** button with an href attribute that redirects us to a page containing extensive information about that specific article:
+
+```php
+@extends('base')
+@section('title' , 'hompage')
+@section('content')
+<h1>My Blog</h1> 
+<!-- @dump($post) -->
+@foreach($post as $posts)
+<article>
+<h2>{{$posts->title}}</h2>
+<p>
+{{$posts->content}}
+</p>
+<p>
+    <a href="{{route('blog.show',['slug' => $posts->slug , 'id' => $posts->id])}}" class="btn btn-primary">More details</a>
+</p>
+</article>
+@endforeach
+{{$post->links()}}
+
+@endsection
+```
+- `{{route('blog.show',['slug' => $posts->slug , 'id' => $posts->id])}}`: 
+This part generates the URL for the specific article using its slug and ID. The `route()` function creates a URL based on the given route name ("blog.show") and parameters (slug and id). When users click "More Details," they are redirected to the show page of the specific article.
+
+5. Styling Based on Current Page in Laravel :
+
+Suppose we want to apply a specific class, say `active`, only when we are on a particular URL. 
+Laravel provides convenient methods to achieve this :
+
+```php
+// =========== Using Blade Directives ===========
+<a @class('active' => request()->route()->getName() == 'blog.index')>Read more</a>
+
+// =========== Or, using Blade Conditionals ===========
+<a class="@if(request()->route()->getName() == 'blog.index') active @endif">Read more</a>
+
+```
+In the first approach, `@class('active' => request()->route()->getName() == 'blog.index')` dynamically adds the class active to the <a> element when the current route matches 'blog.index'.
+
+The second approach uses a Blade `@if`statement to conditionally apply the `active` class based on the same condition. Both methods allow us to style elements according to the active page, enhancing the user experience by indicating their current location within the application

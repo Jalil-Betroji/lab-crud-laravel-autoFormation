@@ -9,6 +9,9 @@
 <p>
 {{$posts->content}}
 </p>
+<p>
+    <a href="{{route('blog.show',['slug' => $posts->slug , 'id' => $posts->id])}}" class="btn btn-primary">More details</a>
+</p>
 </article>
 @endforeach
 {{$post->links()}}

@@ -9,14 +9,14 @@ class PostController extends Controller
 {
     public function index():view{
         return view('blog.index',[
-            'post'=>\App\Models\Post::paginate(2)
+            'post'=>\App\Models\Post::paginate(1)
         ]);
     }
-    public function show(string $slug , string $id): RedirectResponse | Post{
-        $post = \App\Models\Post::findOrFail($id);
+    public function show(string $slug , string $id): RedirectResponse | view{
+        $post = Post::findOrFail($id);
         if($post->slug !== $slug){
         return to_route('blog.show' , ['slug' => $post->slug , 'id' => $post->id]);
         }
-        return $post;
+        return view('Blog.show', ['post'=>$post]);
     }
 }
