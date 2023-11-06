@@ -272,3 +272,22 @@ Laravel provides convenient methods to achieve this :
 In the first approach, `@class('active' => request()->route()->getName() == 'blog.index')` dynamically adds the class active to the <a> element when the current route matches 'blog.index'.
 
 The second approach uses a Blade `@if`statement to conditionally apply the `active` class based on the same condition. Both methods allow us to style elements according to the active page, enhancing the user experience by indicating their current location within the application
+
+> Smart Styling with Laravel Using str_start_with Method :
+
+To enhance our styling logic further, we can use `the str_start_with` method to check if the current route name starts with a specific prefix. This approach allows for more intelligent and dynamic styling based on route prefixes:
+
+```php
+@php
+$routeName = request()->route()->getName();
+@endphp
+
+// =========== Using Blade Directives ===========
+<a @class('active' => str_starts_with($routeName , 'blog.'))>Read more</a>
+
+// =========== Or, using Blade Conditionals ===========
+<a class="@if(str_starts_with($routeName,'blog.')) active @endif">Read more</a>
+
+```
+
+Here, `str_starts_with($routeName, 'blog.')` checks if the route name starts with `'blog.'`, and accordingly, the `active` class is added. This approach provides a flexible way to apply styles based on specific route prefixes, enhancing the user interface dynamically.

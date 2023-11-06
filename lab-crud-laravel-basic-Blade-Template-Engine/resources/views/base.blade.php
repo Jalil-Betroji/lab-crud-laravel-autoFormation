@@ -9,16 +9,19 @@
 </head>
 
 <body>
+  @php
+$routeName = request()->route()->getName()
+@endphp
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="@if(request()->route()->getName() !== 'blog.index') navbar-brand @endif" href="/">Blogs</a>
+    <a class="@if(request()->route()->getName()!== 'blog.index' )active @endif" href="/">Blogs</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a @class(['nav-link' , 'active' => request()->route()->getName() == 'blog.index']) aria-current="page" href="{{route('blog.index')}}">blog</a>
+          <a @class(['nav-link' , 'active' => str_starts_with($routeName,'blog.')]) aria-current="page" href="{{route('blog.index')}}">blog</a>
         </li>
         <li class="nav-item"></li>
           <a class="nav-link" aria-current="page" href="#">Link</a>
