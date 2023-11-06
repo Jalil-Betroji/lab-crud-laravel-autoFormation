@@ -166,9 +166,9 @@ In the `validator::make` method, the second argument is an array of validation r
 
 > Now we will move to the important method that we gonna use a lot 
 
-5. `validate()` method :
+5. `validated()` method :
 
-The `validate()` method is used to retrieve an array corresponding to the data that has been successfully validated. When valid data is provided (in this case, 'laravel validation data' and 'my laravel autoformation content' for 'title' and 'content' respectively), the validate() method returns the validated data in an array format.
+The `validated()` method is utilized to retrieve an array corresponding to the data that has been successfully validated. When valid data is provided (in this case, `'laravel validation data'` and `'my laravel autoformation content'` for `'title'` and `'content'`, respectively), the `validated()` method returns the validated data in an array format.
 
 ```php
 <?php
@@ -199,13 +199,22 @@ class PostController extends Controller
 
 In the `validator::make` method, the second argument is an array of validation rules. Here, 'title' is set as required and must not exceed 23 characters `(max:23)`.
 
-- Validation Check and `validate()` Method :
+- Validation Check and `validated()` Method :
 
-`dd($validator->errors())` is employed to dump and display the validated data. When the validation rules are met (for example, if `'title'` contains valid data), the `validate()` method returns an array containing the validated data.
+`dd($validator->errors())` is employed to dump and display the validated data. When the validation rules are met (for example, if `'title'` contains valid data), the `validated()` method returns an array containing the validated data .
 
 > The validation rule `'title' => 'required|max:23'` specifies that the `'title'` field must be both `'required'` and have a maximum length of 23 characters. Consequently, if `'title'` contains valid data (meaning it is not empty and does not exceed 23 characters), the `validate()` method will successfully return an array containing only the validated `'title'` field.
 
-However, `'content'` is not included in the validation rule, so its content is not considered during the validation process. As a result, the `validate()` method will not include `'content'` in the returned array.
+However, `'content'` is not included in the validation rule, so its content is not considered during the validation process. As a result, the `validated()` method will not include `'content'` in the returned array.
 
 *here is an example of dd return*
 <img src='validateDR.PNG'>
+
+> In our validator method, if the validation fails, Laravel throws an exceptional validation error. This exception is specific to Laravel and triggers default behavior. When Laravel encounters this exception, it automatically redirects the user to the previous page. This behavior ensures a seamless user experience by preventing the application from crashing when invalid data is submitted.
+
+It's important to note that Laravel's default behavior handles these validation exceptions internally, sparing developers the need to explicitly handle every validation failure case. This streamlined process helps maintain application stability and user satisfaction.
+
+Here is an image of the validator method code in `validator.php`:
+<img src='validationException.PNG'>
+
+- But in our case, since we don't have a previous page, it attempts to redirect us in a loop on the same page. That's why we encounter an error at the browser level.
