@@ -12,7 +12,7 @@ class PostController extends Controller
     $validator = validator::make([
         'title'=>''
     ],[
-        'title' => 'required|min:3'
+        'title' => 'required|max:8'
     ]);
     dd($validator->fails());
         return view('blog.index',[

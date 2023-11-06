@@ -87,3 +87,42 @@ In the `validator::make` method, the second argument is an array of validation r
 - Validation Check:
 
 The `dd($validator->fails())` statement checks if the validation fails. If the input does not meet the defined criteria `(minimum length)`, `fails()` returns `true`, indicating validation failure.
+
+> Now, let's ensure that users cannot insert a value longer than 8 characters :
+
+2. `max` Rule :
+
+In this code, the max validation rule in Laravel ensures that the 'title' input field contains a maximum of 8 characters. Here's how it works:
+
+```php
+<?php
+
+namespace App\Http\Controllers;
+use App\Models\Post;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View;
+
+class PostController extends Controller
+{
+    public function index():view{
+    $validator = validator::make([
+        'title'=>''
+    ],[
+        'title' => 'required|max:8'
+    ]);
+    dd($validator->fails());
+        return view('blog.index',[
+            'post'=>\App\Models\Post::paginate(1)
+        ]);
+    }
+}
+```
+
+- Validation Setup:
+
+In the `validator::make` method, the second argument is an array of validation rules. Here, `'title' => 'required|max:8'` specifies that the `'title'` field is required and must not exceed 8 characters `(max:8)`.
+
+- Validation Check:
+
+The `dd($validator->fails())` statement checks if the validation fails. If the input exceeds the defined maximum length (8 characters in this case), `fails()` returns true, indicating validation failure.
