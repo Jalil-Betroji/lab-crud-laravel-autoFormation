@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
 class PostController extends Controller
 {
     public function index():view{
+    $validator = validator::make([
+        'title'=>'3456876567556767567'
+    ],[
+        'title' => 'required|numeric'
+    ]);
+    dd($validator->fails());
         return view('blog.index',[
             'post'=>\App\Models\Post::paginate(1)
         ]);
