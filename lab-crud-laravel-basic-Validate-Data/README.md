@@ -163,3 +163,49 @@ In the `validator::make` method, the second argument is an array of validation r
 
 `dd($validator->errors())` is utilized to dump and display the validation errors. If validation fails (for instance, if the title exceeds 8 characters in this case), the `errors` method will contain detailed error messages related to the validation failure
 <img src="errorMR.PNG">
+
+> Now we will move to the important method that we gonna use a lot 
+
+5. `validate()` method :
+
+The `validate()` method is used to retrieve an array corresponding to the data that has been successfully validated. When valid data is provided (in this case, 'laravel validation data' and 'my laravel autoformation content' for 'title' and 'content' respectively), the validate() method returns the validated data in an array format.
+
+```php
+<?php
+
+namespace App\Http\Controllers;
+use App\Models\Post;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View;
+
+class PostController extends Controller
+{
+    public function index():view{
+    $validator = validator::make([
+        'title'=>'laravel validation data',
+        'content' =>'my laravel autoforamtion content'
+    ],[
+        'title' => 'required|max:23'
+    ]);
+    dd($validator->validate());
+        return view('blog.index',[
+            'post'=>\App\Models\Post::paginate(1)
+        ]);
+    }
+}
+```
+- Validation Setup:
+
+In the `validator::make` method, the second argument is an array of validation rules. Here, 'title' is set as required and must not exceed 23 characters `(max:23)`.
+
+- Validation Check and `validate()` Method :
+
+`dd($validator->errors())` is employed to dump and display the validated data. When the validation rules are met (for example, if `'title'` contains valid data), the `validate()` method returns an array containing the validated data.
+
+> The validation rule `'title' => 'required|max:23'` specifies that the `'title'` field must be both `'required'` and have a maximum length of 23 characters. Consequently, if `'title'` contains valid data (meaning it is not empty and does not exceed 23 characters), the `validate()` method will successfully return an array containing only the validated `'title'` field.
+
+However, `'content'` is not included in the validation rule, so its content is not considered during the validation process. As a result, the `validate()` method will not include `'content'` in the returned array.
+
+*here is an example of dd return*
+<img src='validateDR.PNG'>
