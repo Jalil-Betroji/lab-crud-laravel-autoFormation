@@ -47,3 +47,6 @@ The second argument is an array of validation rules. In this case, it specifies 
 - Validation Check:
 
 The `dd($validator->fails())` statement is used to check if the validation fails. `fails()` is a method provided by the `validator` that returns `true` if validation `fails`, indicating that the provided data does not meet the specified rules. If the validation fails, the application will halt and display the validation errors.
+
+> Here is an example of the result : 
+<img src='validateR.PNG'>

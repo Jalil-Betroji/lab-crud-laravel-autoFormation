@@ -10,7 +10,7 @@ class PostController extends Controller
 {
     public function index():view{
     $validator = validator::make([
-        'title'=>'3456876567556767567'
+        'title'=>''
     ],[
         'title' => 'required|numeric'
     ]);
