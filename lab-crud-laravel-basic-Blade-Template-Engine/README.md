@@ -1,4 +1,4 @@
-# About this tutorial
+# Laravel Template Engine
 
 In this chapter we're going to discover the part seen in the MVC structure. Laravel has a template engine that will allow us to generate HTML views more simply.
 > we may ask ourselves why we would not simply use php , the problem is that with views written in php it is not very practical to use a template system or to include sections and all that we have to complicate our lives a little bit and that's why blade will be useful 
