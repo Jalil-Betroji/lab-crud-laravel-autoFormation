@@ -188,7 +188,7 @@ class PostController extends Controller
     ],[
         'title' => 'required|max:23'
     ]);
-    dd($validator->validate());
+    dd($validator->validated());
         return view('blog.index',[
             'post'=>\App\Models\Post::paginate(1)
         ]);

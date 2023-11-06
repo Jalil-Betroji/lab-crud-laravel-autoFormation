@@ -10,12 +10,12 @@ class PostController extends Controller
 {
     public function index():view{
     $validator = validator::make([
-        'title'=>'',
+        'title'=>'laravel validation data',
         'content' =>'my laravel autoforamtion content'
     ],[
         'title' => 'required|max:23'
     ]);
-    dd($validator->validate());
+    dd($validator->validated());
         return view('blog.index',[
             'post'=>\App\Models\Post::paginate(1)
         ]);
